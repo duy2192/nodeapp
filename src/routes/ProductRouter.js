@@ -1,11 +1,13 @@
-const Product = require("../controllers/ProductController.js");
-const router = require("express").Router();
+import { Router } from "express";
+import ProductController from"../controllers/ProductController.js";
+const router=Router()
+import {authorization,authentication} from "../middlewares/authMiddleware"
 
-router.post("/",Product.create)
-router.patch("/:productid",Product.update)
-router.get("/",Product.getAll)
-router.get("/:productid",Product.get)
-router.delete("/:productid",Product.delete)
+router.post("/",authentication,authorization,ProductController.create)
+router.patch("/:productid",authentication,authorization,ProductController.update)
+router.get("/",ProductController.getAll)
+router.get("/:productid",ProductController.get)
+router.delete("/:productid",authentication,authorization,ProductController.delete)
 
 
-module.exports = router;
+export default router;

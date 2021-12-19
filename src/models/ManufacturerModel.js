@@ -1,6 +1,6 @@
-const sql = require("./index.js");
+import sql from "./index.js";
 
-const Manufacturer = {
+const ManufacturerModel = {
   async create(data, result) {
     const query = `INSERT INTO manufacturer (name,decription,createdby,updatedby) values (?,?,?,?);
     `;
@@ -62,4 +62,4 @@ const Manufacturer = {
     });
   },
 };
-module.exports = Manufacturer;
+export default ManufacturerModel;

@@ -1,11 +1,14 @@
-const Categories = require("../controllers/CategoriesController.js");
-const router = require("express").Router();
+import CategoriesController from "../controllers/CategoriesController.js";
+import  { Router } from "express"
+import {authorization,authentication} from "../middlewares/authMiddleware"
+const router=Router()
+router.post("/",authentication,authorization,CategoriesController.create)
+router.patch("/:categoryid",authentication,authorization,CategoriesController.update)
+router.delete("/:categoryid",authentication,authorization,CategoriesController.delete)
+router.get("/all",CategoriesController.getAll)
+router.get("/",CategoriesController.get)
+router.get("/bymanuid/:manuid",CategoriesController.getByManuId)
+router.get("/bymanuid/",CategoriesController.getByManuId)
 
-router.post("/",Categories.create)
-router.get("/all",Categories.getAll)
-router.get("/",Categories.get)
-router.get("/bymanuid/:manuid",Categories.getByManuId)
-router.get("/bymanuid/",Categories.getByManuId)
 
-
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const path = require('path');
-const express = require('express');
-const fs = require('fs');
-const router = express.Router()
+import path from 'path';
+import {Router} from 'express';
+import fs from 'fs';
+const router = Router()
 
 const dir = path.join(__dirname, '../../public');
 const mime = {
@@ -31,4 +31,4 @@ router.get('*', function (req, res) {
         res.status(404).end('Not found');
     });
 });
-module.exports = router
+export default router

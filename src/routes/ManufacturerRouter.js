@@ -1,9 +1,11 @@
-const Manufacturer = require("../controllers/ManufacturerController.js");
-const router = require("express").Router();
+import ManufacturerController from "../controllers/ManufacturerController.js";
+import {Router} from "express"
+import {authorization,authentication} from "../middlewares/authMiddleware"
 
-router.post("/",Manufacturer.create)
-router.get("/",Manufacturer.get)
-router.get("/bycategoryid/:categoryid",Manufacturer.getByCategoryId)
-router.get("/bycategoryid/",Manufacturer.getByCategoryId)
+const router=Router()
+router.post("/",authentication,authorization,ManufacturerController.create)
+router.get("/",ManufacturerController.get)
+router.get("/bycategoryid/:categoryid",ManufacturerController.getByCategoryId)
+router.get("/bycategoryid/",ManufacturerController.getByCategoryId)
 
-module.exports = router;
+export default router;

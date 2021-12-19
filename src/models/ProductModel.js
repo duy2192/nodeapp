@@ -1,8 +1,8 @@
-const sql = require("./index.js");
+import sql  from "./index.js";
 
 const ProductModel = {
   async create(data, result) {
-    const query = `INSERT INTO product (categoryid,manuid,name,decription,quantity,price,promotion,ispromotion,isfreeship,thumbnail,createdby,updatedby) values (?,?,?,?,?,?,?,?,?,?,?,?);`;
+    const query = `INSERT INTO product (categoryid,manuid,name,decription,quantity,price,saleprice,isfreeship,thumbnail,createdby,updatedby) values (?,?,?,?,?,?,?,?,?,?,?);`;
     sql.query(
       query,
       [
@@ -12,8 +12,7 @@ const ProductModel = {
         data.decription,
         data.quantity,
         data.price,
-        data.promotion,
-        Number.parseInt(data.promotion) > 0 ? "true" : "false",
+        data.saleprice,
         data.isfreeship,
         data.thumbnail,
         data.createdby,
@@ -36,7 +35,7 @@ const ProductModel = {
     );
   },
   async update(data, result) {
-    const query = `Update product set categoryid=? , manuid=? , name=? ,decription=?, quantity=?,price=?,promotion=?,ispromotion=?,isfreeship=?,thumbnail=?,updatedby=? where productid=?;`;
+    const query = `Update product set categoryid=? , manuid=? , name=? ,decription=?, quantity=?,price=?,saleprice=?,isfreeship=?,thumbnail=?,updatedby=? where productid=?;`;
     sql.query(
       query,
       [
@@ -46,8 +45,7 @@ const ProductModel = {
         data.decription,
         data.quantity,
         data.price,
-        data.promotion,
-        data.ispromotion,
+        data.saleprice,
         data.isfreeship,
         data.thumbnail,
         data.updatedby,
@@ -114,7 +112,7 @@ const ProductModel = {
       ? sql.format(` and product.manuid=cast(? as unsigned) `, filters.manuid)
       : " ";
     query +=
-      filters.ispromotion === "true" ? ` and ispromotion like 'true' ` : " ";
+      filters.ispromotion === "true" ? ` and saleprice < price ` : " ";
     query +=
       filters.isfreeship === "true" ? ` and isfreeship like 'true' ` : " ";
     query +=
@@ -152,8 +150,6 @@ const ProductModel = {
     query += filters.manuid
       ? sql.format(` and product.manuid=cast(? as unsigned) `, filters.manuid)
       : " ";
-    query +=
-      filters.ispromotion === "true" ? ` and ispromotion like 'true' ` : " ";
     query +=
       filters.isfreeship === "true" ? ` and isfreeship like 'true' ` : " ";
     query +=
@@ -219,4 +215,4 @@ const ProductModel = {
     );
   },
 };
-module.exports = ProductModel;
+export default ProductModel;

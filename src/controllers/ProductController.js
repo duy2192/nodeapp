@@ -1,5 +1,6 @@
-const ProductModel = require("../models/ProductModel.js");
-exports.create = async (req, res) => {
+import ProductModel from "../models/ProductModel.js";
+const ProductController={
+create : async (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Không có dữ liệu gửi!",
@@ -10,7 +11,7 @@ exports.create = async (req, res) => {
     decription: req.body.decription,
     thumbnail: req.body.thumbnail||'public/uploads/img/static/blank.png',
     price: req.body.price,
-    promotion: req.body.promotion,
+    saleprice: req.body.saleprice,
     isfreeship: req.body.isfreeship,
     createdby: req.body.createdby,
     updatedby: req.body.updatedby,
@@ -22,9 +23,9 @@ exports.create = async (req, res) => {
     if (err) res.status(400).send({ message: err });
     else res.status(200).send(result);
   });
-};
+},
 
-exports.update = async (req, res) => {
+update : async (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Không có dữ liệu gửi!",
@@ -36,6 +37,7 @@ exports.update = async (req, res) => {
     decription: req.body.decription,
     thumbnail: req.body.thumbnail||'public/uploads/img/static/blank.png',
     price: req.body.price,
+    saleprice: req.body.saleprice,
     promotion: req.body.promotion,
     isfreeship: req.body.isfreeship,
     updatedby: req.body.updatedby,
@@ -49,8 +51,8 @@ exports.update = async (req, res) => {
     if (err) res.status(400).send({ message: err });
     else res.status(200).send(result);
   });
-};
-exports.get = async (req, res) => {
+},
+get : async (req, res) => {
   const { productid } = req.params;
   const data = {
     productid,
@@ -59,8 +61,8 @@ exports.get = async (req, res) => {
     if (err) res.status(400).send({ message: err });
     else res.status(200).send(result);
   });
-};
-exports.getAll = async (req, res) => {
+},
+getAll : async (req, res) => {
   const {
     _limit,
     _page,
@@ -88,8 +90,8 @@ exports.getAll = async (req, res) => {
     if (err) res.status(400).send({ message: err });
     else res.status(200).send(result);
   });
-};
-exports.delete = async (req, res) => {
+},
+delete : async (req, res) => {
   const { productid } = req.params;
   const data = {
     productid,
@@ -98,4 +100,5 @@ exports.delete = async (req, res) => {
     if (err) res.status(400).send({ message: err });
     else res.status(200).send(result);
   });
-};
+}}
+export default ProductController

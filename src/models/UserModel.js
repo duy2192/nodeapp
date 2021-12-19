@@ -1,8 +1,9 @@
-const sql = require("./index.js");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const secretString = "yyuuddaannhh";
-const User = {
+import sql from "./index.js";
+import bcrypt from "bcryptjs";
+// const bcrypt =require( "bcrypt");
+import jwt from "jsonwebtoken";
+const secretString = process.env.JWT_KEY;
+const UserModel = {
   async login(data, result) {
     const query = `SELECT * FROM user where (email= ?) or (username=?)`;
     sql.query(query, [data.email, data.username], async (err, res) => {
@@ -63,5 +64,23 @@ const User = {
       }
     );
   },
+  async findOne(data, result) {
+    const query = `SELECT * FROM user where userid=?`;
+    sql.query(query, [data.id,], async (err, res) => {
+      try {
+        if (err) {
+          throw err;
+        }
+        if (res.length) {
+          
+            result(null, res[0]);
+            return;
+          } 
+        throw "Không tìm thấy tài khoản!";
+      } catch (error) {
+        result({ message: error }, null);
+      }
+    });
+  },
 };
-module.exports = User;
+export default UserModel;
